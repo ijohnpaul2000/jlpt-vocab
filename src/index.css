@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-[#051017] text-white font-incosolata;
+  }
+  li {
+    @apply p-4 text-white text-2xl font-bold hover:bg-[#d24545] duration-150 ease-in cursor-pointer;
+  }
+}
