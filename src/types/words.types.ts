@@ -1,7 +1,7 @@
 export interface Word {
   word: string;
   furigana: string;
-  level: number;
+  level: number | string;
   meaning: string;
   romaji: string;
 }

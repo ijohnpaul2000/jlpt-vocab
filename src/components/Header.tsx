@@ -8,16 +8,26 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { MdOutlineLogout } from "react-icons/md";
+import ConfirmationModal from "./ConfirmationModal";
+import { auth } from "../firebase";
+import useGoogleAuth from "../hooks/useGoogleAuth";
 const provider = new GoogleAuthProvider();
 type Props = {};
 
+interface HeaderData {
+  title: string;
+  link: string;
+  onClick?: () => Promise<void>;
+}
+
 const Header = (props: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const navigate = useNavigate();
-  const auth = getAuth();
+  const { isLoggedIn } = useGoogleAuth(auth);
 
-  const headerData = [
+  const headerData: HeaderData[] = [
     {
       title: "N1",
       link: "/level/1",
@@ -40,41 +50,24 @@ const Header = (props: Props) => {
     },
   ];
 
-  useEffect(() => {
-    getAuth().onAuthStateChanged(function (user) {
-      if (user) {
-        console.log("user is logged in");
-        setIsLoggedIn(true);
-      } else {
-        console.log("user is logged out");
-        signOut(getAuth());
-        setIsLoggedIn(false);
-      }
-    });
-  }, [auth, isLoggedIn]);
-
   async function login() {
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
-      const user = result.user;
     } catch (error: any) {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
       // The email of the user's account used.
       const email = error.customData.email;
-      // The AuthCredential type that was used.
+      // The AuthCredentuseial type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
     }
+    navigate("/tests");
   }
-
-  console.log(isLoggedIn);
 
   return (
     <div className="h-[60px] w-full bg-[#E23B43] flex items-center justify-center px-5">
-      <button onClick={() => signOut(getAuth())}>signout</button>
       <div className="max-w-[1400px] w-full h-full flex items-center justify-between">
         <h1
           className="text-white font-incosolata text-xl cursor-pointer"
@@ -86,20 +79,33 @@ const Header = (props: Props) => {
         {/* DESKTOP MENU */}
         <ul className="hidden md:flex">
           {headerData.map((item) => (
-            <li
-              onClick={() => navigate(item.link)}
-              key={item.link}
-              className="text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4"
-            >
-              {item.title}
-            </li>
+            <React.Fragment key={item.title}>
+              <li
+                onClick={() => navigate(item.link)}
+                className="text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4"
+              >
+                {item.title}
+              </li>
+            </React.Fragment>
           ))}
           <li
-            onClick={isLoggedIn ? () => signOut(getAuth()) : login}
-            className={`text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+            onClick={() => {
+              isLoggedIn ? navigate("/profile") : login();
+            }}
+            className={`${
+              isLoggedIn ? "bg-[#092031]" : ""
+            } text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
           >
             {isLoggedIn ? auth.currentUser?.displayName : "Test My Skill!"}
           </li>
+          {isLoggedIn && (
+            <li
+              onClick={() => setConfirmationModal(true)}
+              className={`ml-5 text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+            >
+              <MdOutlineLogout size={25} />
+            </li>
+          )}
         </ul>
 
         <HiOutlineBars3BottomRight
@@ -125,18 +131,47 @@ const Header = (props: Props) => {
         />
         <ul className="w-full">
           {headerData.map((item) => (
+            <React.Fragment key={item.link}>
+              <li
+                onClick={() => {
+                  navigate(item.link);
+                  setIsOpen(!isOpen);
+                }}
+              >
+                {item.title}
+              </li>
+            </React.Fragment>
+          ))}
+          <li
+            onClick={login}
+            className={`${
+              isLoggedIn && "pointer-events-none"
+            } text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+          >
+            {isLoggedIn ? auth.currentUser?.displayName : "Test My Skill!"}
+          </li>
+          {isLoggedIn && (
             <li
               onClick={() => {
-                navigate(item.link);
+                signOut(getAuth());
                 setIsOpen(!isOpen);
               }}
-              key={item.link}
+              className={`text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
             >
-              {item.title}
+              Sign Out
             </li>
-          ))}
+          )}
         </ul>
       </div>
+      {confirmationModal && (
+        <ConfirmationModal
+          onAccept={() => {
+            signOut(getAuth());
+            setConfirmationModal(false);
+          }}
+          onDecline={() => setConfirmationModal(false)}
+        />
+      )}
     </div>
   );
 };

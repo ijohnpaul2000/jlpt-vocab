@@ -4,9 +4,8 @@ import {
   useGetSearchedWordsQuery,
 } from "../redux/services/words";
 import brushmark from "../assets/brushmark.png";
-import { BsTriangleFill, BsSearch } from "react-icons/bs";
+import { BsTriangleFill } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
-import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import React, { useEffect, useState } from "react";
@@ -14,7 +13,6 @@ import WordNotFound from "../components/WordNotFound";
 import { SearchWordResponse, Word } from "../types/words.types";
 import Levels from "./Levels";
 import { Link as LinkS } from "react-scroll";
-import Widgets from "../components/Widgets";
 
 const HomePage = () => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -74,10 +72,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="relative mb-16">
-      <Header />
-      <Widgets />
-
+    <div className="mb-16">
       {(isFetchingSearchedWord ||
         isFetchingRandomWord ||
         isLoadingRandomWord ||
@@ -90,11 +85,7 @@ const HomePage = () => {
           setIsOpen={setIsOpen}
         />
       )}
-
-      <form
-        onSubmit={handleSearch}
-        className="float-right mr-5 mt-5 flex items-end "
-      >
+      <form onSubmit={handleSearch} className="flex justify-end mt-10 mr-5">
         <input
           value={searchInput}
           type="text"
@@ -117,7 +108,7 @@ const HomePage = () => {
         </button>
       </form>
       <div className="px-5 text-center ">
-        <h1 className="font-bold text-[#E23B43] text-6xl  my-16">
+        <h1 className="font-bold text-[#E23B43] text-6xl my-4">
           {transformedWord?.word ?? randomWord?.word}
           <img src={brushmark} alt="" className="max-w-[100px] mx-auto" />
         </h1>
@@ -170,7 +161,6 @@ const HomePage = () => {
         </div>
       </div>
       <Levels />
-      <Footer />
     </div>
   );
 };

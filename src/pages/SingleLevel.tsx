@@ -50,13 +50,15 @@ const SingleLevel = (props: Props) => {
       <div className="flex justify-center my-3">
         <button
           onClick={() => setOffset(0)}
-          className="bg-[#E23B43] text-white p-2 rounded-lg m-2"
+          className="bg-[#E23B43] text-white p-2 rounded-lg m-2 disabled:bg-[#092031]"
+          disabled={offset === 0}
         >
           <HiChevronDoubleLeft />
         </button>
         <button
           onClick={() => setOffset(offset === 0 ? 0 : offset - 1)}
-          className="bg-[#E23B43] text-white p-2 rounded-lg m-2"
+          className="bg-[#E23B43] text-white p-2 rounded-lg m-2 disabled:bg-[#092031]"
+          disabled={offset === 0}
         >
           <HiChevronLeft />
         </button>
@@ -69,13 +71,15 @@ const SingleLevel = (props: Props) => {
 
         <button
           onClick={() => setOffset(sLevelData?.total ? offset + 1 : offset)}
-          className="bg-[#E23B43] text-white p-2 rounded-lg m-2"
+          className="bg-[#E23B43] text-white p-2 rounded-lg m-2 disabled:bg-[#092031]"
+          disabled={offset === totalPages - 1}
         >
           <HiChevronRight />
         </button>
         <button
           onClick={() => setOffset(totalPages - 1)}
-          className="bg-[#E23B43] text-white p-2 rounded-lg m-2"
+          className="bg-[#E23B43] text-white p-2 rounded-lg m-2 disabled:bg-[#092031]"
+          disabled={offset === totalPages - 1}
         >
           <HiChevronDoubleRight />
         </button>
