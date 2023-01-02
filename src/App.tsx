@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path={"/"} element={<PrivateRoute />}>
           <Route path={"/profile"} element={<Profile />} />
-          <Route path={"/home"} element={<HomePage />} />
           <Route path={"/tests/level/:level"} element={<Tests />} />
+          <Route path={"/home"} element={<HomePage />} />
         </Route>
         <Route path={"/level/:level"} element={<SingleLevel />} />
       </Routes>

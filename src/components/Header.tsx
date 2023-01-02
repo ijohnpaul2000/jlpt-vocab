@@ -63,6 +63,7 @@ const Header = (props: Props) => {
 
       localStorage.setItem("user", user);
       const credential = GoogleAuthProvider.credentialFromResult(result);
+      setIsOpen(false);
     } catch (error: any) {
       // Handle Errors here.
       const errorCode = error.code;
@@ -154,17 +155,22 @@ const Header = (props: Props) => {
             </React.Fragment>
           ))}
           <li
-            onClick={login}
-            className={`${
-              isLoggedIn && "pointer-events-none"
-            } text-white hover:bg-[#092031] rounded-lg mx-1 hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+            onClick={() => {
+              if (isLoggedIn) {
+                navigate("/profile");
+                setIsOpen(!isOpen);
+              } else {
+                login();
+              }
+            }}
+            className={` text-white hover:bg-[#092031] rounded-lg mx-1 hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
           >
             {isLoggedIn ? auth.currentUser?.displayName : "Test My Skill!"}
           </li>
           {isLoggedIn && (
             <li
               onClick={() => {
-                signOut(getAuth());
+                setConfirmationModal(true);
                 setIsOpen(!isOpen);
               }}
               className={`text-white hover:bg-[#092031] mx-1 rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
@@ -181,7 +187,10 @@ const Header = (props: Props) => {
             signOut(getAuth());
             setConfirmationModal(false);
           }}
-          onDecline={() => setConfirmationModal(false)}
+          onDecline={() => {
+            setConfirmationModal(false);
+            setIsOpen(true);
+          }}
         />
       )}
     </div>

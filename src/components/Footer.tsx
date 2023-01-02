@@ -9,6 +9,7 @@ const Footer = (props: Props) => {
         <p>語彙 JLPT</p>
         Created By: {"<Paul/>"}{" "}
       </div>
+      <div className="fixed right-0 bottom-0 mr-2 mb-2">Version: 1.0.0</div>
     </footer>
   );
 };
