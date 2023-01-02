@@ -45,7 +45,6 @@ const SingleLevel = (props: Props) => {
       {(isLoadingSLevel || isFetchingSLevel) && <Loading />}
       {isErrorSLevel && <Error />}
 
-      <Header />
       {/* PAGINATION */}
       <div className="flex justify-center my-3">
         <button
@@ -125,8 +124,6 @@ const SingleLevel = (props: Props) => {
           </div>
         ))}
       </div>
-
-      <Footer />
     </>
   );
 };

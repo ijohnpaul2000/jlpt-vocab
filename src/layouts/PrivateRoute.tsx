@@ -18,7 +18,6 @@ const PrivateRoute = (props: Props) => {
   if (isLoggedIn && location.pathname === "/") navigate("/home");
   return (
     <>
-      <Header />
       <Widgets />
       {isLoggedIn ? (
         <>
@@ -27,7 +26,6 @@ const PrivateRoute = (props: Props) => {
       ) : (
         <HomePage />
       )}
-      <Footer />
     </>
   );
 };

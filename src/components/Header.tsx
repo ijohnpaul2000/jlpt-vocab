@@ -93,7 +93,7 @@ const Header = (props: Props) => {
             <React.Fragment key={item.title}>
               <li
                 onClick={() => navigate(item.link)}
-                className="text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4"
+                className="text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-base cursor-pointer py-2 px-4 "
               >
                 {item.title}
               </li>
@@ -105,7 +105,7 @@ const Header = (props: Props) => {
             }}
             className={`${
               isLoggedIn ? "bg-[#092031]" : ""
-            } text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+            } text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-base cursor-pointer py-2 px-4 ml-2`}
           >
             {isLoggedIn ? auth.currentUser?.displayName : "Test My Skill!"}
           </li>
@@ -157,7 +157,7 @@ const Header = (props: Props) => {
             onClick={login}
             className={`${
               isLoggedIn && "pointer-events-none"
-            } text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+            } text-white hover:bg-[#092031] rounded-lg mx-1 hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
           >
             {isLoggedIn ? auth.currentUser?.displayName : "Test My Skill!"}
           </li>
@@ -167,7 +167,7 @@ const Header = (props: Props) => {
                 signOut(getAuth());
                 setIsOpen(!isOpen);
               }}
-              className={`text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
+              className={`text-white hover:bg-[#092031] mx-1 rounded-lg hover:text-[#E23B43] font-incosolata text-xl cursor-pointer py-2 px-4`}
             >
               Sign Out
             </li>

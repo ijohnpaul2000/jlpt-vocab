@@ -130,9 +130,9 @@ const Tests = (props: Props) => {
         <hr className="mx-10 md:mx-32 my-2" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 max-w-[700px] mx-auto">
-          {choices.map((choice) => (
+          {choices.map((choice, index) => (
             <div
-              key={choice}
+              key={index + choice}
               onClick={() => handleAnswer(choice)}
               className="bg-[#E23B43] text-md rounded-lg p-3 mx-10 my-1 md:m-3 cursor-pointer flex items-center justify-center"
             >
