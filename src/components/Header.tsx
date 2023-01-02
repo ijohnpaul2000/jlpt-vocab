@@ -212,6 +212,7 @@ const Header = (props: Props) => {
             localStorage.removeItem("user");
             signOut(getAuth());
             setConfirmationModal(false);
+            setIsTesting(false);
           }}
           onDecline={() => {
             setConfirmationModal(false);
