@@ -189,7 +189,6 @@ const Header = (props: Props) => {
           }}
           onDecline={() => {
             setConfirmationModal(false);
-            setIsOpen(true);
           }}
         />
       )}
