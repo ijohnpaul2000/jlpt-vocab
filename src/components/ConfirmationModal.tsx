@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {
   onAccept: () => Promise<void> | void;
@@ -6,6 +6,33 @@ type Props = {
 };
 
 const ConfirmationModal = (props: Props) => {
+  useEffect(() => {
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        props.onDecline();
+      }
+    });
+
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        props.onAccept();
+      }
+    });
+
+    return () => {
+      window.removeEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+          props.onDecline();
+        }
+      });
+      window.removeEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Enter") {
+          props.onDecline();
+        }
+      });
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-[#000000c4] flex justify-center items-center w-full z-20 text-black">
       <div className=" max-w-[500px]">

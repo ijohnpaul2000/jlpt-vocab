@@ -23,6 +23,42 @@ const Tests = (props: Props) => {
     filterWords();
   }, []);
 
+  console.log(allWordsByLevel);
+
+  function generateQuestions() {
+    const questions: any = [];
+
+    for (let i = 0; i < 20; i++) {
+      const randomIndex = Math.floor(Math.random() * allWordsByLevel.length);
+
+      const choices = [];
+
+      choices.push({
+        a: allWordsByLevel[randomIndex]?.meaning,
+      });
+
+      questions.push({
+        question: allWordsByLevel[randomIndex]?.word,
+        choices: {
+          a: allWordsByLevel[randomIndex]?.meaning,
+          b: allWordsByLevel[randomIndex]?.meaning,
+          c: allWordsByLevel[randomIndex]?.meaning,
+          d: allWordsByLevel[randomIndex]?.meaning,
+        },
+      });
+    }
+
+    return {
+      questions,
+    };
+  }
+
+  const questionsAndAnswers = useMemo(
+    () => generateQuestions(),
+    [allWordsByLevel]
+  );
+
+  console.log(questionsAndAnswers);
   return <></>;
 };
 

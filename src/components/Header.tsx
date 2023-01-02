@@ -63,7 +63,7 @@ const Header = (props: Props) => {
       // The AuthCredentuseial type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
     }
-    navigate("/tests");
+    navigate("/profile");
   }
 
   return (
