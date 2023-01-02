@@ -38,6 +38,19 @@ const Tests = (props: Props) => {
   }, [allWordsByLevel]);
 
   useEffect(() => {
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    });
+    return () => {
+      window.removeEventListener("beforeunload", (e) => {
+        e.preventDefault();
+        e.returnValue = "";
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     let lastQuestionNumber: number =
       questionNumber === 1 ? questionNumber : questionNumber - 1;
 
@@ -114,8 +127,8 @@ const Tests = (props: Props) => {
   }, [questionNumber]);
 
   return (
-    <div className="bg-[#092031] mx-5 mt-10 mb-20 rounded-lg text-white">
-      <div className="max-w-[1000px] mx-auto py-10 text-center">
+    <div className="bg-[#092031] max-w-[800px] mx-auto mt-10 mb-20 rounded-lg text-white">
+      <div className="py-10 text-center">
         <h1 className="text-2xl font-bold">
           Question {questionNumber} out of 20
         </h1>
@@ -131,9 +144,9 @@ const Tests = (props: Props) => {
         <hr className="mx-10 md:mx-32 my-2" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 max-w-[700px] mx-auto">
-          {choices.map((choice) => (
+          {choices.map((choice, index) => (
             <div
-              key={choice}
+              key={choice + index.toString()}
               onClick={() => handleAnswer(choice)}
               className="bg-[#E23B43] text-md rounded-lg p-3 mx-10 my-1 md:m-3 cursor-pointer flex items-center justify-center"
             >

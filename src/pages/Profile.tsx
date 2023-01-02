@@ -92,7 +92,7 @@ const Profile = (props: Props) => {
           </span>{" "}
           You did a <span className="text-green-400">{judgment}</span> on your
           previous test with an accuracy of{" "}
-          <span className="text-green-400">{accuracy}</span>. Keep it up!
+          <span className="text-green-400">{accuracy}%</span>. Keep it up!
         </h1>
       );
     } else if (accuracy >= 80 && accuracy < 100) {
@@ -106,7 +106,7 @@ const Profile = (props: Props) => {
           </span>{" "}
           You did a <span className="text-yellow-400">{judgment}</span> on your
           previous test with an accuracy of{" "}
-          <span className="text-yellow-400">{accuracy}</span>. Keep it up!
+          <span className="text-yellow-400">{accuracy}%</span>. Keep it up!
         </h1>
       );
     } else if (accuracy <= 80) {
@@ -121,7 +121,7 @@ const Profile = (props: Props) => {
           You did a{" "}
           <span className="text-red-400">{judgment.toUpperCase()}</span> on your
           previous test with an accuracy of{" "}
-          <span className="text-red-400">{accuracy}</span>. Try again!
+          <span className="text-red-400">{accuracy}%</span>. Try again!
         </h1>
       );
     }
@@ -158,7 +158,7 @@ const Profile = (props: Props) => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Accuracy: </h1>
-                <h1 className="text-right">{previousData.accuracy}</h1>
+                <h1 className="text-right">{previousData.accuracy}%</h1>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Level: </h1>

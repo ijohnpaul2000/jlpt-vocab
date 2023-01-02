@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, Navigate, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -15,6 +15,9 @@ const PrivateRoute = (props: Props) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [isTesting, setIsTesting] = useState<boolean>(false);
+
   if (isLoggedIn && location.pathname === "/") navigate("/home");
   return (
     <>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineBars3BottomRight } from "react-icons/hi2";
 import { IoCloseOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   getAuth,
   signOut,
@@ -23,11 +23,15 @@ interface HeaderData {
 }
 
 const Header = (props: Props) => {
+  const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
+  const [isTesting, setIsTesting] = useState<boolean>(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn } = useGoogleAuth(auth);
-  const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
   const headerData: HeaderData[] = [
     {
@@ -74,8 +78,30 @@ const Header = (props: Props) => {
       const credential = GoogleAuthProvider.credentialFromError(error);
     }
     setTimeout(() => {
-      navigate("/profile");
+      handleNavigation("/profile");
     }, 1000);
+  }
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/tests/")) {
+      setIsTesting(true);
+    } else {
+      setIsTesting(false);
+    }
+  }, [isTesting, location.pathname]);
+
+  function handleNavigation(link: string): void {
+    if (isTesting) {
+      if (
+        window.confirm(
+          "Testing is in progress. Are you sure you want to leave?"
+        )
+      ) {
+        navigate(link);
+      }
+    } else {
+      navigate(link);
+    }
   }
 
   return (
@@ -83,7 +109,7 @@ const Header = (props: Props) => {
       <div className="max-w-[1400px] w-full h-full flex items-center justify-between">
         <h1
           className="text-white font-incosolata text-xl cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => handleNavigation("/")}
         >
           語彙 <span className="text-white font-bold text-2xl">JLPT</span>
         </h1>
@@ -93,7 +119,7 @@ const Header = (props: Props) => {
           {headerData.map((item) => (
             <React.Fragment key={item.title}>
               <li
-                onClick={() => navigate(item.link)}
+                onClick={() => handleNavigation(item.link)}
                 className="text-white hover:bg-[#092031] rounded-lg hover:text-[#E23B43] font-incosolata text-base cursor-pointer py-2 px-4 "
               >
                 {item.title}
@@ -102,7 +128,7 @@ const Header = (props: Props) => {
           ))}
           <li
             onClick={() => {
-              isLoggedIn ? navigate("/profile") : login();
+              isLoggedIn ? handleNavigation("/profile") : login();
             }}
             className={`${
               isLoggedIn ? "bg-[#092031]" : ""
@@ -146,7 +172,7 @@ const Header = (props: Props) => {
             <React.Fragment key={item.link}>
               <li
                 onClick={() => {
-                  navigate(item.link);
+                  handleNavigation(item.link);
                   setIsOpen(!isOpen);
                 }}
               >
@@ -157,7 +183,7 @@ const Header = (props: Props) => {
           <li
             onClick={() => {
               if (isLoggedIn) {
-                navigate("/profile");
+                handleNavigation("/profile");
                 setIsOpen(!isOpen);
               } else {
                 login();
