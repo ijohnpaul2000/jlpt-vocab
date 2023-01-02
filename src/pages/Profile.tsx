@@ -151,22 +151,34 @@ const Profile = (props: Props) => {
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Date: </h1>
                 <h1 className="text-right">
-                  {new Date(
-                    previousData.date?.seconds * 1000
-                  ).toLocaleDateString()}
+                  {previousData.date
+                    ? new Date(
+                        previousData.date?.seconds * 1000
+                      ).toLocaleDateString()
+                    : "No previous test"}
                 </h1>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Accuracy: </h1>
-                <h1 className="text-right">{previousData.accuracy}%</h1>
+                <h1 className="text-right">
+                  {previousData.accuracy
+                    ? previousData.accuracy + "%"
+                    : "No previous test"}
+                </h1>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Level: </h1>
-                <h1 className="text-right">{previousData.level}</h1>
+                <h1 className="text-right">
+                  {previousData.level ? previousData.level : "No previous test"}
+                </h1>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-[auto,auto] p-2 m-2 bg-[#E23B43] rounded-lg">
                 <h1 className="text-lg font-semibold">Previous Score: </h1>
-                <h1 className="text-right">{previousData.previousTestScore}</h1>
+                <h1 className="text-right">
+                  {previousData.previousTestScore
+                    ? previousData.previousTestScore
+                    : "No previous test"}
+                </h1>
               </div>
             </div>
             <div className="text-center">
