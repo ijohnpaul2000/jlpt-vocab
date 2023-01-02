@@ -33,7 +33,7 @@ const NLevels = (props: Props) => {
           {nLevelData?.words.map((word: Word) => (
             <div
               key={word.word}
-              className="bg-[#092031] m-4 p-4 rounded-lg hover:scale-105 cursor-pointer hover:shadow-[3px_3px_0px_0px_#E23B43]  duration-200 "
+              className="bg-[#092031] m-4 p-4 rounded-lg  cursor-pointer hover:shadow-[3px_3px_0px_0px_#E23B43]  duration-200"
             >
               <p>
                 <span className="font-bold text-[#E23B43]"> Word:</span>{" "}

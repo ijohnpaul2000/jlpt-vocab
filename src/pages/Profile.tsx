@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 type Props = {};
 
 interface TestData {
-  accuracy: string;
+  accuracy: number;
   date: {
     seconds: number;
     nanoseconds: number;
@@ -30,17 +30,7 @@ interface TestNavigation {
 }
 
 const Profile = (props: Props) => {
-  const [previousData, setpreviousData] = useState<TestData>({
-    accuracy: "",
-    date: {
-      seconds: 0,
-      nanoseconds: 0,
-    },
-    level: 0,
-    email: "",
-    previousTestScore: 0,
-    createdAt: undefined,
-  });
+  const [previousData, setpreviousData] = useState<TestData>({} as TestData);
 
   const navigate = useNavigate();
 
@@ -88,10 +78,10 @@ const Profile = (props: Props) => {
 
   function renderMessage(
     currentUser: string | undefined | null,
-    accuracy: string
+    accuracy: number
   ) {
     let judgment = "";
-    if (accuracy === Number(100).toString()) {
+    if (accuracy === 100) {
       judgment = "perfect";
       return (
         <h1 className="text-center">
@@ -105,7 +95,7 @@ const Profile = (props: Props) => {
           <span className="text-green-400">{accuracy}</span>. Keep it up!
         </h1>
       );
-    } else if (accuracy >= Number(80).toString()) {
+    } else if (accuracy >= 80 && accuracy < 100) {
       judgment = "good";
       return (
         <h1 className="text-center">
@@ -119,7 +109,7 @@ const Profile = (props: Props) => {
           <span className="text-yellow-400">{accuracy}</span>. Keep it up!
         </h1>
       );
-    } else if (accuracy <= Number(80).toString()) {
+    } else if (accuracy <= 80) {
       judgment = "bad";
       return (
         <h1 className="text-center">
@@ -162,7 +152,7 @@ const Profile = (props: Props) => {
                 <h1 className="text-lg font-semibold">Date: </h1>
                 <h1 className="text-right">
                   {new Date(
-                    previousData.date.seconds * 1000
+                    previousData.date?.seconds * 1000
                   ).toLocaleDateString()}
                 </h1>
               </div>

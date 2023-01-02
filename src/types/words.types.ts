@@ -12,3 +12,12 @@ export interface SearchWordResponse {
   total: number;
   words: Word[];
 }
+
+export interface Question {
+  word: string;
+  furigana: string;
+  level: number | string;
+  meaning: string;
+  romaji: string;
+  choices: {};
+}

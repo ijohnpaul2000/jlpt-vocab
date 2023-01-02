@@ -12,6 +12,7 @@ import { MdOutlineLogout } from "react-icons/md";
 import ConfirmationModal from "./ConfirmationModal";
 import { auth } from "../firebase";
 import useGoogleAuth from "../hooks/useGoogleAuth";
+import * as crypto from "crypto-js";
 const provider = new GoogleAuthProvider();
 type Props = {};
 
@@ -26,6 +27,7 @@ const Header = (props: Props) => {
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const { isLoggedIn } = useGoogleAuth(auth);
+  const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
   const headerData: HeaderData[] = [
     {
@@ -53,6 +55,13 @@ const Header = (props: Props) => {
   async function login() {
     try {
       const result = await signInWithPopup(auth, provider);
+
+      const user = crypto.AES.encrypt(
+        JSON.stringify(result.user),
+        ENCRYPTION_KEY!
+      ).toString();
+
+      localStorage.setItem("user", user);
       const credential = GoogleAuthProvider.credentialFromResult(result);
     } catch (error: any) {
       // Handle Errors here.
@@ -63,7 +72,9 @@ const Header = (props: Props) => {
       // The AuthCredentuseial type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
     }
-    navigate("/profile");
+    setTimeout(() => {
+      navigate("/profile");
+    }, 1000);
   }
 
   return (
@@ -166,6 +177,7 @@ const Header = (props: Props) => {
       {confirmationModal && (
         <ConfirmationModal
           onAccept={() => {
+            localStorage.removeItem("user");
             signOut(getAuth());
             setConfirmationModal(false);
           }}
