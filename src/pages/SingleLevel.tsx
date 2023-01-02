@@ -40,6 +40,10 @@ const SingleLevel = (props: Props) => {
     calculateTotalPages();
   }, [sLevelData?.total]);
 
+  useEffect(() => {
+    setOffset(0);
+  }, [level]);
+
   return (
     <>
       {(isLoadingSLevel || isFetchingSLevel) && <Loading />}
@@ -84,7 +88,7 @@ const SingleLevel = (props: Props) => {
         </button>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] mb-10 mx-5 pb-16">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] mb-10 mx-7 pb-16">
         {
           // NO RESULTS
           sLevelData?.words.length === 0 && (

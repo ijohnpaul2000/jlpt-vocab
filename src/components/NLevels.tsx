@@ -2,7 +2,7 @@ import React from "react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { useGetWordsByLevelQuery } from "../redux/services/words";
-import { SearchWordResponse, Word } from "../types/words.types";
+import { Word } from "../types/words.types";
 import Loading from "./Loading";
 
 type Props = {
@@ -28,12 +28,12 @@ const NLevels = (props: Props) => {
   return (
     <div id="level">
       <h1 className="text-4xl font-bold text-center">Level {props.level}</h1>
-      <div ref={ref} className="p-6 m-4">
+      <div ref={ref} className="p-6 m-10">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))]">
           {nLevelData?.words.map((word: Word) => (
             <div
               key={word.word}
-              className="bg-[#092031] m-4 p-4 rounded-lg  cursor-pointer hover:shadow-[3px_3px_0px_0px_#E23B43]  duration-200"
+              className="bg-[#092031] m-4 p-4 rounded-lg hover:scale-105 cursor-pointer hover:shadow-[3px_3px_0px_0px_#E23B43]  duration-200"
             >
               <p>
                 <span className="font-bold text-[#E23B43]"> Word:</span>{" "}
